@@ -24,6 +24,13 @@ REM // -q makes AS shut up
 REM // -A gives us a small speedup
 set AS_MSGPATH=AS\Win32
 set USEANSI=n
+"AS\Win32\sh-elf-as" sh2master.asm
+"AS\Win32\sh-elf-objcopy" -O binary --only-section=.text a.out sh2master.bin
+"AS\Win32\sh-elf-as" sh2slave.asm
+"AS\Win32\sh-elf-objcopy" -O binary --only-section=.text a.out sh2slave.bin
+"AS\Win32\sh-elf-as" sh2int.asm
+"AS\Win32\sh-elf-objcopy" -O binary --only-section=.text a.out sh2int.bin
+"AS\Win32\asw" -xx -q -c -D Sonic3_Complete=1 -E -A -L sonic3k.asm
 
 REM // allow the user to choose to output error messages to file by supplying the -logerrors parameter
 IF "%1"=="-logerrors" ( "AS\Win32\asw.exe" -xx -q -c -D Sonic3_Complete=1 -E -A -L sonic3k.asm ) ELSE "AS\Win32\asw.exe" -xx -q -c -D Sonic3_Complete=1 -A -L sonic3k.asm
@@ -36,7 +43,11 @@ IF EXIST sonic3k.p "AS\Win32\s3p2bin" sonic3k.p sonic3k.bin sonic3k.h
 
 REM // done -- pause if we seem to have failed, then exit
 IF NOT EXIST sonic3k.p goto LABLPAUSE
+IF EXIST sh2int.bin del sh2int.bin
+IF EXIST sh2master.bin del sh2master.bin
+IF EXIST sh2slave.bin del sh2slave.bin
 IF EXIST sonic3k.bin goto LABLEXIT
+
 
 :LABLPAUSE
 pause

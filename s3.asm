@@ -18,23 +18,24 @@
 		include "s3.constants.asm"		; RAM addresses moved around between S3 and S&K
 ; ---------------------------------------------------------------------------
 
-Vectors:	dc.l	Vectors,	EntryPoint,	ErrorTrap,	ErrorTrap	; 0
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 4
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 8
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 12
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 16
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 20
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 24
-		dc.l	JmpTo_HInt,	ErrorTrap,	VInt,		ErrorTrap	; 28
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 32
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 36
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 40
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 44
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 48
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 52
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 56
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 60
-Header:		dc.b "SEGA GENESIS    "
+Vectors:
+		dc.l	Vectors, MARSInit, MARSInit, MARSInit				; 4
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 8
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 12
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 16
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 20
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 24
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 28
+		dc.l	JmpTo_HInt, MARSInit, VInt, MARSInit				; 32
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 36
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 40
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 44
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 48
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 52
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 56
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 60
+		dc.l	MARSInit, MARSInit, MARSInit, MARSInit				; 64
+Header:		dc.b "SEGA 32X        "
 Copyright:	dc.b "(C)SEGA 1993.NOV"
 Domestic_Name:	dc.b "SONIC THE             HEDGEHOG 3                "
 Overseas_Name:	dc.b "SONIC THE             HEDGEHOG 3                "
@@ -59,6 +60,246 @@ Unknown_Header:	dc.w 1
 		dc.l $2003FF
 		dc.b "                "
 Country_Code:	dc.b "U               "
+
+		jmp	(EntryPoint).l
+
+		jsr	(ErrorTrap).l		;  /* EX_BusError */
+		jsr	(ErrorTrap).l		;  /* EX_AddrError */
+		jsr	(ErrorTrap).l		;  /* EX_IllInstr */
+		jsr	(ErrorTrap).l		;  /* EX_DivByZero */
+		jsr	(ErrorTrap).l		;  /* EX_CHK */
+		jsr	(ErrorTrap).l		;  /* EX_TrapV */
+		jsr	(ErrorTrap).l		;  /* EX_Priviledge */
+		jsr	(ErrorTrap).l		;  /* EX_Trace */
+		jsr	(ErrorTrap).l		;  /* EX_LineA */
+		jsr	(ErrorTrap).l		;  /* EX_LineF */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		jsr	(ErrorTrap).l			;  /* EX_Spurious */
+		jsr	(ErrorTrap).l			;  /* EX_Level1 */
+		jsr	(ErrorTrap).l			;  /* EX_Level2 */
+		jsr	(ErrorTrap).l			;  /* EX_Level3 */
+		jmp	(JmpTo_HInt).l			;  /* EX_Level4 */
+		jsr	(ErrorTrap).l			;  /* EX_Level5 */
+		jmp	(VInt).l			;  /* EX_Level6 */
+		jsr	(ErrorTrap).l			;  /* EX_Level7 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap0 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap1 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap2 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap3 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap4 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap5 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap6 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap7 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap8 */
+		jsr	(ErrorTrap).l			;  /* EX_Trap9 */
+		jsr	(ErrorTrap).l			;  /* EX_TrapA */
+		jsr	(ErrorTrap).l			;  /* EX_TrapB */
+		jsr	(ErrorTrap).l			;  /* EX_TrapC */
+		jsr	(ErrorTrap).l			;  /* EX_TrapD */
+		jsr	(ErrorTrap).l			;  /* EX_TrapE */
+		jsr	(ErrorTrap).l			;  /* EX_TrapF */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0,0,0			;  /* reserved */
+		dc.b	0,0,0,0,0,0				;  /* reserved */
+
+MARSInitHeader:
+		dc.b	"MARS CHECK MODE "				; module name
+		dc.l	$00000000						; version
+
+		dc.l	MasterVBR						; source address (ROM)
+		dc.l	$00000000						; destination address (SDRAM)
+		dc.l	(EndOf32XCode-MasterVBR)		; size
+
+		dc.l	(Master-MasterVBR)+$06000000	; SH2 (Master) start address
+		dc.l	(Slave-MasterVBR)+$06000000		; SH2 (Slave) start address
+
+		dc.l	(MasterVBR-MasterVBR)+$06000000	; SH2 (Master) vector base address
+		dc.l	(SlaveVBR-MasterVBR)+$06000000	; SH2 (Slave) vector base address
+
+MARSInit:
+		BINCLUDE "32x/marsboot.bin"
+
+EntryPoint32X:
+		bra.w		EntryPoint
+
+	align 4
+MasterVBR:
+		dc.l	(Master-MasterVBR)+$06000000
+		dc.l	$0603FF00
+		dc.l	(Master-MasterVBR)+$06000000
+		dc.l	$0603FF00
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	$00000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	$20100400
+		dc.l	$20100420
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+		dc.l	(Interrupt-MasterVBR)+$06000000
+		dc.l	(Interrupt-MasterVBR)+$06000000
+		dc.l	(DummyExceptionMaster-MasterVBR)+$06000000
+
+SlaveVBR:
+		dc.l	(Slave-MasterVBR)+$06000000
+		dc.l	$06040000
+		dc.l	(Slave-MasterVBR)+$06000000
+		dc.l	$06040000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	$00000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	$20100400
+		dc.l	$20100420
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0,0,0,0,0
+		dc.b	0,0,0,0
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+		dc.l	(DummyExceptionSlave-MasterVBR)+$06000000
+
+StartOf32XCode:
+
+Master:
+		BINCLUDE	"sh2master.bin"
+		align 4
+
+Slave:
+		BINCLUDE	"sh2slave.bin"
+		align 4
+
+Interrupt:
+DummyExceptionMaster:
+DummyExceptionSlave:
+		dc.w	$002B		; rte
+		dc.w	$0009		; nop
+		align 4
+
+EndOf32XCode:
+
 ; ---------------------------------------------------------------------------
 
 ErrorTrap:

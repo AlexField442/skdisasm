@@ -1,0 +1,1 @@
+Thanks to Saxman for his Sonic Boom engine, for which it has 32X compatibility.
