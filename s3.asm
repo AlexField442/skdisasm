@@ -7157,9 +7157,9 @@ LoadSolids:
 		adda.l	d0,a1
 		move.l	(a1),d0
 		move.l	d0,(Primary_collision_addr).w
-		addi.l	#$600,d0
+		addq.l	#1,d0
 		move.l	d0,(Secondary_collision_addr).w
-		move.l	#Primary_collision_addr,(Collision_addr).w
+		move.l	(Primary_collision_addr).w,(Collision_addr).w
 		rts
 ; End of function LoadSolids
 
@@ -17328,7 +17328,8 @@ loc_105EA:
 loc_105F8:
 		movea.l	(Collision_addr).w,a2
 		add.w	d0,d0
-		move.w	(a2,d0.w),d0
+		move.b	(a2,d0.w),d0
+		andi.w	#$FF,d0
 		beq.s	loc_105EA
 		lea	(AngleArray).l,a2
 		move.b	(a2,d0.w),(a4)
@@ -17409,7 +17410,8 @@ loc_1068E:
 loc_1069C:
 		movea.l	(Collision_addr).w,a2
 		add.w	d0,d0
-		move.w	(a2,d0.w),d0
+		move.b	(a2,d0.w),d0
+		andi.w	#$FF,d0
 		beq.s	loc_1068E
 		lea	(AngleArray).l,a2
 		move.b	(a2,d0.w),(a4)
@@ -17503,7 +17505,8 @@ loc_1075C:
 loc_10762:
 		movea.l	(Collision_addr).w,a2
 		add.w	d0,d0
-		move.w	(a2,d0.w),d0
+		move.b	(a2,d0.w),d0
+		andi.w	#$FF,d0
 		beq.s	loc_1075C
 		lea	(AngleArray).l,a2
 		move.b	(a2,d0.w),(a4)
@@ -17633,7 +17636,8 @@ loc_10856:
 loc_10864:
 		movea.l	(Collision_addr).w,a2
 		add.w	d0,d0
-		move.w	(a2,d0.w),d0
+		move.b	(a2,d0.w),d0
+		andi.w	#$FF,d0
 		beq.s	loc_10856
 		lea	(AngleArray).l,a2
 		move.b	(a2,d0.w),(a4)
@@ -17714,7 +17718,8 @@ loc_108FA:
 loc_10908:
 		movea.l	(Collision_addr).w,a2
 		add.w	d0,d0
-		move.w	(a2,d0.w),d0
+		move.b	(a2,d0.w),d0
+		andi.w	#$FF,d0
 		beq.s	loc_108FA
 		lea	(AngleArray).l,a2
 		move.b	(a2,d0.w),(a4)
@@ -117727,11 +117732,11 @@ HCZ_WaterlineScroll_Data:
 LBZ_WaterlineScroll_Data:
 		binclude "Levels/LBZ/Misc/LBZ Waterline Scroll Data.bin"
 		even
-AngleArray:	binclude "Levels/Misc/Angles S3.bin"
+AngleArray:	binclude "Levels/Misc/Angles.bin"
 		even
-HeightMaps:	binclude "Levels/Misc/Height Maps S3.bin"
+HeightMaps:	binclude "Levels/Misc/Height Maps.bin"
 		even
-HeightMapsRot:	binclude "Levels/Misc/Height Maps Rotated S3.bin"
+HeightMapsRot:	binclude "Levels/Misc/Height Maps Rotated.bin"
 		even
 SolidIndexes:	dc.l Solid_AIZ1
 		dc.l Solid_AIZ2

@@ -1,0 +1,5 @@
+Version 1.01: First Update
+* Sonic 3 levels now use the interleaved Sonic & Knuckles collision format; affects Sonic 3 Alone and Sonic 3 & Knuckles.
+
+Version 1.00: Initial Release
+* Moved all three games to the Sega 32X; made sure "lock-on technology" still functioned correctly.
