@@ -1,3 +1,6 @@
+Version 1.02: Major Update
+* SolidIndexes is now split into two ASM files to improve readability; due to this, labels for Sonic & Knuckles collision data has been added to Sonic 3 Alone (though they point to the same location).
+
 Version 1.01: First Update
 * Sonic 3 levels now use the interleaved Sonic & Knuckles collision format; affects Sonic 3 Alone and Sonic 3 & Knuckles.
 

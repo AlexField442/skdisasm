@@ -117738,54 +117738,8 @@ HeightMaps:	binclude "Levels/Misc/Height Maps.bin"
 		even
 HeightMapsRot:	binclude "Levels/Misc/Height Maps Rotated.bin"
 		even
-SolidIndexes:	dc.l Solid_AIZ1
-		dc.l Solid_AIZ2
-		dc.l Solid_HCZ1
-		dc.l Solid_HCZ2
-		dc.l Solid_MGZ1
-		dc.l Solid_MGZ2
-		dc.l Solid_CNZ
-		dc.l Solid_CNZ
-		dc.l Solid_FBZ
-		dc.l Solid_FBZ
-		dc.l Solid_ICZ1
-		dc.l Solid_ICZ2
-		dc.l Solid_LBZ1
-		dc.l Solid_LBZ2
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_ALZ
-		dc.l Solid_BPZ
-		dc.l Solid_BPZ
-		dc.l Solid_DPZ
-		dc.l Solid_DPZ
-		dc.l Solid_CGZ
-		dc.l Solid_CGZ
-		dc.l Solid_EMZ
-		dc.l Solid_EMZ
-		dc.l Solid_Gumball_Special
-		dc.l Solid_Gumball_Special
-		dc.l Solid_Pachinko_Special
-		dc.l Solid_Pachinko_Special
-		dc.l Solid_Slots_Special
-		dc.l Solid_Slots_Special
-		dc.l Solid_Slots_Special
-		dc.l Solid_Slots_Special
-		dc.l Solid_Slots_Special
-		dc.l Solid_Slots_Special
+SolidIndexes:	include	"Levels/SolidIndexes (S3 and S3K).asm"
+
 Solid_AIZ1:	binclude "Levels/AIZ/Collision/1.bin"
 		even
 Solid_AIZ2:	binclude "Levels/AIZ/Collision/2.bin"
@@ -117809,6 +117763,14 @@ Solid_LBZ1:	binclude "Levels/LBZ/Collision/1.bin"
 		even
 Solid_LBZ2:	binclude "Levels/LBZ/Collision/2.bin"
 		even
+Solid_MHZ:
+Solid_SOZ:
+Solid_LRZ1:
+Solid_LRZ2:
+Solid_SSZ1:
+Solid_SSZ2:
+Solid_DEZ:
+Solid_DDZ:
 Solid_ALZ:	binclude "Levels/ALZ/Collision/1.bin"
 		even
 Solid_BPZ:	binclude "Levels/BPZ/Collision/1.bin"
@@ -117824,6 +117786,8 @@ Solid_Gumball_Special:
 		even
 Solid_Pachinko_Special:
 Solid_Slots_Special:
+Solid_LRZBoss:
+Solid_HPZ:
 LevelPtrs:	dc.l Layout_AIZ1
 		dc.l Layout_AIZ2
 		dc.l Layout_HCZ1
