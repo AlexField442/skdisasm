@@ -117738,7 +117738,8 @@ HeightMaps:	binclude "Levels/Misc/Height Maps.bin"
 		even
 HeightMapsRot:	binclude "Levels/Misc/Height Maps Rotated.bin"
 		even
-SolidIndexes:	include	"Levels/SolidIndexes (S3 and S3K).asm"
+
+SolidIndexes:	include	"Levels/SolidIndexes.asm"
 
 Solid_AIZ1:	binclude "Levels/AIZ/Collision/1.bin"
 		even

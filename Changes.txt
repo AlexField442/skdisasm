@@ -1,3 +1,6 @@
+Version 1.03: Universal collision
+* Building a Sonic & Knuckles ROM will now make Sonic 3 levels use the converted collision (s3.bin was modified so that the collision was converted, and any freed space that would cause data shifting was filled in).
+
 Version 1.02: Major Update
 * SolidIndexes is now split into two ASM files to improve readability; due to this, labels for Sonic & Knuckles collision data has been added to Sonic 3 Alone (though they point to the same location).
 
