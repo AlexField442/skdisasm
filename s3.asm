@@ -3489,7 +3489,7 @@ Sega_Screen:
 		move.b	#GameMode_TitleScreen,(Game_mode).w	; set to title screen
 		rts
 
-		include	"Code/Screens/Title Screen (Sonic 3).asm"
+		include	"Code/Screens/Title Screen (Sonic 3 & Knuckles).asm"
 
 ; ---------------------------------------------------------------------------
 LevelMusic_Playlist:
