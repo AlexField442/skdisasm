@@ -117,8 +117,8 @@ locK_3F7E:
 		jsr	(Plane_Map_To_VRAM).l		; Copy screen mappings to VRAM
 		lea	(Pal_TitleSonic1).l,a0
 		lea	(Target_palette).w,a1
-		moveq	#bytesToLcnt($20),d0
-
+		moveq	#bytesToLcnt(Target_palette_line_2-Target_palette),d0
+; loc3_36AE:
 locK_3F9E:
 		move.l	(a0)+,(a1)+				; Fill 2 palette lines with title screen data
 		dbf	d0,locK_3F9E
@@ -131,7 +131,7 @@ locK_3F9E:
 		bsr.w	Play_Music
 		move.w	#3*60,(Demo_timer).w		; Set to wait for 3 seconds
 
-Wait_SegaS3K:
+Wait_Sega:
 		move.b	#VInt_ID_14,(V_int_routine).w
 		bsr.w	Wait_VSync				; Wait for SEGA sound
 		move.b	(Ctrl_1_pressed).w,d0
@@ -141,13 +141,13 @@ Wait_SegaS3K:
 		andi.b	#button_start_mask,d0
 		bne.w	locK_3FE4				; If start was pressed, skip ahead
 		tst.w	(Demo_timer).w
-		bne.s	Wait_SegaS3K
-
+		bne.s	Wait_Sega
+; loc3_36F8:
 locK_3FE4:
 		moveq	#signextendB(cmd_StopSEGA),d0
 		bsr.w	Play_Music				; Stop SEGA sound
 		lea	(Pal_Title).l,a1
-
+; loc3_3704:
 locK_3FF0:
 		move.b	#VInt_ID_2,(V_int_routine).w
 		bsr.w	Wait_VSync
@@ -179,7 +179,7 @@ locK_4040:
 		moveq	#signextendB(mus_TitleScreen),d0
 		bsr.w	Play_Music				; Start playing the title screen music
 
-Wait_TitleS3K:
+Wait_Title:
 		move.b	#VInt_ID_4,(V_int_routine).w
 		jsr	(Process_Kos_Queue).l
 		bsr.w	Wait_VSync
@@ -197,13 +197,13 @@ Wait_TitleS3K:
 		andi.b	#button_start_mask,d0
 		bne.w	locK_4090			; If start was pressed, skip straight to title
 		cmpi.w	#$C,(Title_anim_frame).w
-		blo.s	Wait_TitleS3K		; If last frame was reached, don't repeat
-
+		blo.s	Wait_Title		; If last frame was reached, don't repeat
+; loc3_379E:
 locK_4090:
 		move.w	#$C,(Title_anim_frame).w
 		lea	(Normal_palette).w,a1
-		moveq	#bytesToWcnt($80),d1
-
+		moveq	#bytesToWcnt(Normal_palette_end-Normal_palette),d1
+; loc3_37AA:
 locK_409C:
 		move.w	#$EEE,(a1)+
 		dbf	d1,locK_409C				; Flash palette white
@@ -241,8 +241,8 @@ locK_409C:
 		bsr.w	Wait_VSync
 		lea	(Pal_TitleSonicD).l,a0		; Title palette
 		lea	(Target_palette).w,a1
-		moveq	#bytesToLcnt($80),d0
-
+		moveq	#bytesToLcnt(Target_palette_end-Target_palette),d0
+; loc3_384E:
 locK_4140:
 		move.l	(a0)+,(a1)+
 		dbf	d0,locK_4140
@@ -286,7 +286,7 @@ locK_4140:
 		move.l	#Obj_TitleANDKnuckles,(Dynamic_object_RAM+(object_size*4)).w		; Load all applicable title objects
 	endif
 		move.b	#0,(Title_anim_delay).w
-
+; loc3_38D8:
 locK_41D4:
 		move.b	#VInt_ID_4,(V_int_routine).w
 		bsr.w	Wait_VSync
@@ -324,19 +324,19 @@ locK_41D4:
 		move.b	#GameMode_SaveScreen,(Game_mode).w		; Game Mode 4C is the save select
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3964:
 locK_4264:
 		subq.b	#1,d0
 		bne.s	locK_4270
 		move.b	#GameMode_CompetitionMenu,(Game_mode).w		; Game Mode 38 is Competition mode
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3970:
 locK_4270:
 		move.b	#GameMode_LevelSelect,(Game_mode).w		; Game Mode 28 is the level select
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3878:
 locK_4278:
 		moveq	#signextendB(cmd_FadeOut),d0
 		bsr.w	Play_SFX			; Fade out music
@@ -447,8 +447,8 @@ TitleAnim_FlipBuffer:
 		move.b	#4-1,(Title_anim_delay).w
 		lea	(Target_palette).w,a0
 		lea	(Normal_palette).w,a1
-		moveq	#bytesToLcnt($40),d0
-
+		moveq	#bytesToLcnt(Target_palette_line_3-Target_palette),d0
+; loc3_3A18:
 locK_4376:
 		move.l	(a0)+,(a1)+
 		dbf	d0,locK_4376
@@ -459,23 +459,23 @@ locK_4376:
 		move.w	#$8230,(VDP_control_port).l		; Nametable A Address $C000
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3A3C:
 locK_439A:
 		move.w	#$8407,(VDP_control_port).l		; Nametable B Address $E000
 		move.w	#$8238,(VDP_control_port).l		; Nametable A Address $E000
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3A4E:
 locK_43AC:
 		subq.b	#1,(Title_anim_delay).w
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3A54:
 locK_43B2:
 		lea	(Target_palette).w,a0
 		lea	(Normal_palette).w,a1
-		moveq	#bytesToLcnt($80),d0
-
+		moveq	#bytesToLcnt(Target_palette_end-Target_palette),d0
+; loc3_3A5E:
 locK_43BC:
 		move.l	(a0)+,(a1)+
 		dbf	d0,locK_43BC
@@ -489,18 +489,18 @@ locK_43BC:
 
 Iterate_TitleSonicFrame:
 		cmpi.b	#1,(Title_anim_delay).w
-		bne.s	locret_43F0
+		bne.s	locretK_43F0
 		move.w	(Title_anim_frame).w,d0
 		move.b	SonicFrameIndex(pc,d0.w),d0
 		ext.w	d0
 		bmi.s	locK_43F2	; if negative, do not load anymore frames
 		bsr.w	TitleSonic_LoadFrame
 		addq.w	#1,(Title_anim_frame).w
-
-locret_43F0:
+; locret3_3A92:
+locretK_43F0:
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3A94:
 locK_43F2:
 		move.w	#$C,(Title_anim_frame).w
 		move.b	#3,(Title_anim_delay).w
@@ -577,23 +577,23 @@ TitleSonic_LoadFrame:
 		bsr.w	Kos_Decomp
 		move.w	a1,d3
 		lsr.w	#1,d3
-
+; loc3_3B46:
 locK_4446:
 		move.l	#RAM_start,d1
 		move.w	#0,d2
 		tst.b	(Title_anim_buffer).w		; FFFFBC toggles on and off so that each animation frame could alternate locations for a sort of makeshift double-buffering
 		beq.s	locK_445A
 		move.w	#tiles_to_bytes(ArtTile_Title_Buffer),d2
-
+; loc3_3B5A:
 locK_445A:
 		andi.l	#$FFFFFF,d1
 		jsr	(Add_To_DMA_Queue).l
-
+; loc3_3B66:
 locK_4466:
 		movea.l	(a2)+,a0			; Palette data address
 		lea	(Target_palette).w,a1
-		moveq	#bytesToLcnt($40),d0
-
+		moveq	#bytesToLcnt(Target_palette_line_3-Target_palette),d0
+; loc3_3B6E:
 locK_446E:
 		move.l	(a0)+,(a1)+
 		dbf	d0,locK_446E
@@ -622,7 +622,7 @@ locK_449A:
 		move	#$2300,sr
 		rts
 ; ---------------------------------------------------------------------------
-
+; loc3_3BA6:
 locK_44B8:
 		lea	(RAM_start+$8000).w,a1			; Buffer 2
 		movea.l	(a2)+,a0				; Enigma Mappings
@@ -630,7 +630,7 @@ locK_44B8:
 		cmpi.w	#7,d7
 		bhs.s	locK_44CC
 		move.w	#make_art_tile($000,0,0),d0
-
+; loc3_3BBA:
 locK_44CC:
 		bsr.w	Eni_Decomp
 	if ~~Sonic3_Alone
@@ -768,17 +768,17 @@ Obj_TitleBanner_Main:
 		move.l	#Obj_TitleTM,(Reserved_object_3).w
 		bra.s	locK_48C2
 ; ---------------------------------------------------------------------------
-
+; loc3_3F86:
 locK_48AA:
 		move.b	#-1,$34(a0)
 		move.w	#-$40,d1
-
+; loc3_3F90:
 locK_48B4:
 		add.w	d1,y_vel(a0)
 		cmp.b	$34(a0),d2
 		beq.s	locK_48C2
 		asr	y_vel(a0)
-
+; loc3_3F9E:
 locK_48C2:
 		move.w	$30(a0),d0
 		neg.w	d0
@@ -800,7 +800,7 @@ Obj_TitleBanner_Display:
 		move.b	#9,anim_frame_timer(a0)
 		addq.b	#4,anim_frame(a0)
 		andi.b	#$1C,anim_frame(a0)
-
+; loc3_3FC2:
 locK_48F2:
 		moveq	#0,d0
 		move.b	anim_frame(a0),d0
@@ -832,10 +832,10 @@ Obj_TitleTM_Display:
 		jmp	(Draw_Sprite).l
 	else
 		tst.b	(Graphics_flags).w
-		bpl.s	locret_4968
+		bpl.s	locretK_4968
 		jmp	(Draw_Sprite).l
 
-locret_4968:
+locretK_4968:
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -867,21 +867,21 @@ OldDebugCode:
 		adda.w	d0,a1
 		move.b	(Ctrl_1_pressed_title).w,d0
 		andi.b	#button_up_mask|button_down_mask|button_left_mask|button_right_mask|button_A_mask|button_B_mask|button_C_mask,d0
-		beq.s	locret_4A10
+		beq.s	locretK_4A10
 		move.b	(Ctrl_1_held_title).w,d0
 		cmp.b	(a1),d0
 		bne.s	locK_4A0A
 		addq.w	#1,(Debug_mode_cheat_counter).w
 		tst.b	1(a1)
-		bne.s	locret_4A10
+		bne.s	locretK_4A10
 		move.w	#(1<<8)|1,(Debug_cheat_flag).w
 		moveq	#signextendB(sfx_RingLoss),d0
 		bsr.w	Play_SFX
-
+; loc3_4066:
 locK_4A0A:
 		move.w	#0,(Debug_mode_cheat_counter).w
-
-locret_4A10:
+; locret3_406C:
+locretK_4A10:
 		rts
 ; ---------------------------------------------------------------------------
 OldDebugCodeDat:
@@ -937,7 +937,7 @@ Obj_TitleSelection_Main:
 		tst.b	(Level_select_flag).w		; If level select is on, maximum choices are 3
 		bne.s	locK_4AAE
 		move.b	#1,d2
-
+; loc3_410A:
 locK_4AAE:
 		btst	#button_down,d0
 		beq.s	locK_4AC8
@@ -945,12 +945,12 @@ locK_4AAE:
 		tst.b	(Level_select_flag).w		; See above
 		bne.s	locK_4AC0
 		andi.b	#1,d2
-
+; loc3_411C:
 locK_4AC0:
 		cmpi.b	#3,d2
 		blo.s	locK_4AC8
 		moveq	#0,d2
-
+; loc3_4124:
 locK_4AC8:
 		move.b	d2,mapping_frame(a0)
 		move.b	d2,(Title_screen_option).w
@@ -958,7 +958,7 @@ locK_4AC8:
 		beq.s	locK_4ADE
 		moveq	#signextendB(sfx_Switch),d0
 		jsr	(Play_SFX).l		; Only play sound if selection was changed
-
+; loc3_413A:
 locK_4ADE:
 		jmp	(Draw_Sprite).l
 ; ---------------------------------------------------------------------------
@@ -1030,11 +1030,11 @@ Obj_TitleTailsPlane_Main:
 		move.b	#1,$30(a0)
 		bset	#0,status(a0)
 		move.w	#$D0,y_pos(a0)
-
+; loc3_424C:
 locK_4C08:
 		bra.s	locK_4C28
 ; ---------------------------------------------------------------------------
-
+; loc3_424E:
 locK_4C0A:
 		subq.w	#1,x_pos(a0)
 		cmpi.w	#0,x_pos(a0)
@@ -1042,7 +1042,7 @@ locK_4C0A:
 		move.b	#0,$30(a0)
 		bclr	#0,status(a0)
 		move.w	#$C0,y_pos(a0)
-
+; loc3_426C:
 locK_4C28:
 		lea	(Ani_TitleTailsPlane).l,a1
 		jsr	(Animate_Sprite).l
@@ -1083,10 +1083,10 @@ S3_Level_Select_Code:
 		move.w	#(1<<8)|1,(Debug_cheat_flag).w
 		moveq	#signextendB(sfx_RingRight),d0
 		bsr.w	Play_SFX
-
+; loc3_42C2:
 locK_4C8A:
 		move.w	#0,(Level_select_cheat_counter).w
-
+; locret3_42C8:
 locret_4C90:
 		rts
 ; End of function S3_Level_Select_Code
