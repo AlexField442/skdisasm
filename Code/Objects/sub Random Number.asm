@@ -7,7 +7,7 @@
 
 Random_Number:
 		move.l	(RNG_seed).w,d1
-	if Sonic3_Alone=1
+	if Sonic3_Alone
 		bne.s	+
 		move.l	#$2A6D365A,d1	; reset seed if needed
 	else
