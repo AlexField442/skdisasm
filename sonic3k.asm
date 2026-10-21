@@ -33617,135 +33617,8 @@ loc_1B57E:
 		tst.w	d7
 		dbmi	d3,loc_1B544
 		bra.w	loc_1B3C2
-; ---------------------------------------------------------------------------
 
-Sprite_OnScreen_Test:
-		move.w	x_pos(a0),d0
-		andi.w	#$FF80,d0
-		sub.w	(Camera_X_pos_coarse_back).w,d0
-		cmpi.w	#$280,d0
-		bhi.w	loc_1B5A0
-		bra.w	Draw_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B5A0:
-		move.w	respawn_addr(a0),d0
-		beq.s	loc_1B5AC
-		movea.w	d0,a2
-		bclr	#7,(a2)
-
-loc_1B5AC:
-		bra.w	Delete_Current_Sprite
-; ---------------------------------------------------------------------------
-
-Sprite_OnScreen_Test2:
-		andi.w	#$FF80,d0
-		sub.w	(Camera_X_pos_coarse_back).w,d0
-		cmpi.w	#$280,d0
-		bhi.w	loc_1B5C4
-		bra.w	Draw_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B5C4:
-		move.w	respawn_addr(a0),d0
-		beq.s	loc_1B5D0
-		movea.w	d0,a2
-		bclr	#7,(a2)
-
-loc_1B5D0:
-		bra.w	Delete_Current_Sprite
-
-; =============== S U B R O U T I N E =======================================
-
-
-Delete_Sprite_If_Not_In_Range:
-		move.w	x_pos(a0),d0
-		andi.w	#$FF80,d0
-		sub.w	(Camera_X_pos_coarse_back).w,d0
-		cmpi.w	#$280,d0
-		bhi.w	loc_1B5EA
-		rts
-; ---------------------------------------------------------------------------
-
-loc_1B5EA:
-		move.w	respawn_addr(a0),d0
-		beq.s	loc_1B5F6
-		movea.w	d0,a2
-		bclr	#7,(a2)
-
-loc_1B5F6:
-		bra.w	Delete_Current_Sprite
-; End of function Delete_Sprite_If_Not_In_Range
-
-; ---------------------------------------------------------------------------
-		; unused
-		tst.w	(Competition_mode).w
-		bne.s	loc_1B628
-		move.w	x_pos(a0),d0
-		andi.w	#$FF80,d0
-		sub.w	(Camera_X_pos_coarse_back).w,d0
-		cmpi.w	#$280,d0
-		bhi.w	loc_1B618
-		bra.w	Draw_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B618:
-		move.w	respawn_addr(a0),d0
-		beq.s	loc_1B624
-		movea.w	d0,a2
-		bclr	#7,(a2)
-
-loc_1B624:
-		bra.w	Delete_Current_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B628:
-		move.w	x_pos(a0),d0
-		andi.w	#$FF00,d0
-		move.w	d0,d1
-		sub.w	(Camera_X_pos_coarse_back).w,d0
-		cmpi.w	#$300,d0
-		bhi.w	loc_1B642
-		bra.w	Draw_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B642:
-		sub.w	(_unkF7DC).w,d1
-		cmpi.w	#$300,d1
-		bhi.w	loc_1B652
-		bra.w	Draw_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B652:
-		move.w	respawn_addr(a0),d0
-		beq.s	loc_1B65E
-		movea.w	d0,a2
-		bclr	#7,(a2)
-
-loc_1B65E:
-		bra.w	Delete_Current_Sprite
-; ---------------------------------------------------------------------------
-
-Sprite_CheckDeleteTouch3:
-		move.w	x_pos(a0),d0
-
-loc_1B666:
-		andi.w	#$FF80,d0
-		sub.w	(Camera_X_pos_coarse_back).w,d0
-		cmpi.w	#$280,d0
-		bhi.w	loc_1B680
-		jsr	(Add_SpriteToCollisionResponseList).l
-		bra.w	Draw_Sprite
-; ---------------------------------------------------------------------------
-
-loc_1B680:
-		move.w	respawn_addr(a0),d0
-		beq.s	loc_1B68C
-		movea.w	d0,a2
-		bclr	#7,(a2)
-
-loc_1B68C:
-		bra.w	Delete_Current_Sprite
+		include	"Code/Objects/sub Sprite OnScreen Test.asm"
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -66996,7 +66869,7 @@ loc_341BC:
 
 loc_341F0:
 		move.w	$30(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 loc_341FA:
@@ -74546,7 +74419,7 @@ loc_3A5DA:
 
 loc_3A616:
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 loc_3A620:
@@ -75741,7 +75614,7 @@ loc_3B8C2:
 loc_3B90C:
 		add.b	d1,angle(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 Map_FBZRotatingPlatform:
 		include "Levels/FBZ/Misc Object Data/Map - Rotating Platform.asm"
@@ -85071,7 +84944,7 @@ loc_435E0:
 		move.b	$36(a0),d0
 		add.b	d0,$34(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 loc_435FE:
@@ -85260,7 +85133,7 @@ loc_4387E:
 		tst.b	$30(a0)
 		bne.s	loc_43892
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 loc_43892:
@@ -85377,7 +85250,7 @@ loc_439BC:
 loc_439DE:
 		subq.b	#2,angle(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -85477,7 +85350,7 @@ loc_43BC4:
 		add.w	$44(a0),d1
 		move.w	d1,x_pos(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 loc_43BDE:
@@ -85504,7 +85377,7 @@ loc_43C0C:
 		add.w	$44(a0),d1
 		move.w	d1,x_pos(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 Obj_LRZOrbitingSpikeBallVertical:
@@ -85552,7 +85425,7 @@ loc_43CB6:
 		add.w	$46(a0),d1
 		move.w	d1,y_pos(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 
 loc_43CD6:
@@ -85579,7 +85452,7 @@ loc_43D04:
 		add.w	$46(a0),d1
 		move.w	d1,y_pos(a0)
 		move.w	$44(a0),d0
-		jmp	(loc_1B666).l
+		jmp	(Sprite_CheckDeleteTouch3_A0).l
 ; ---------------------------------------------------------------------------
 Map_LRZOrbitingSpikeBall:
 		include "Levels/LRZ/Misc Object Data/Map - Orbiting Spike Ball.asm"
