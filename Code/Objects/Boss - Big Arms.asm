@@ -609,6 +609,9 @@ locK_74768:
 	if Sonic3_Alone
 		include	"Code/Objects/Boss - Big Arms (Sonic 3).asm"
 	else
+		; The post-defeat cutscene was completely redone in Sonic 3 & Knuckles due
+		; to Big Arms becoming a Knuckles-only boss. Attempting to diff it would
+		; be basically pointless.
 		include	"Code/Objects/Boss - Big Arms (Sonic 3 & Knuckles).asm"
 	endif
 
